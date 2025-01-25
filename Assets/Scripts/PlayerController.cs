@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
         {
             anim.Play("Idle");
         }
+
         isOnGround = Physics2D.OverlapCircle(playerPosition.position, groundCheckRadius, ground);
         if (isOnGround && Input.GetKeyDown(KeyCode.Space))
         {
@@ -72,6 +73,7 @@ public class PlayerController : MonoBehaviour
             torsoRb.velocity = Vector2.up * jumpForce;
             timeInAir += Time.deltaTime;
         }
+
         if (Input.GetKeyUp(KeyCode.Space) || timeInAir > maxAirTime)
         {
             isJumping = false;
