@@ -19,4 +19,5 @@ public class RagdollBalancing : MonoBehaviour
     {
         rb.MoveRotation(Mathf.LerpAngle(rb.rotation, targetRotation, force * Time.deltaTime));
     }
+
 }
