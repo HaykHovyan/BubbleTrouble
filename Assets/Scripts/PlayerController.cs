@@ -30,9 +30,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     LayerMask ground;
     [SerializeField]
-    Transform playerPosition;
+    Transform groundCheck1;
     [SerializeField]
-    Rigidbody2D torsoRb;
+    Transform groundCheck2;
+    [SerializeField]
+    Rigidbody2D mainRb;
     bool isOnGround;
     bool isJumping;
     float timeInAir;
@@ -62,22 +64,26 @@ public class PlayerController : MonoBehaviour
         {
             anim.Play("Idle");
         }
-        isOnGround = Physics2D.OverlapCircle(playerPosition.position, groundCheckRadius, ground);
+
+        isOnGround = Physics2D.OverlapCircle(groundCheck1.position, groundCheckRadius, ground);
+        if (!isOnGround) isOnGround = Physics2D.OverlapCircle(groundCheck2.position, groundCheckRadius, ground);
         if (isOnGround && Input.GetKeyDown(KeyCode.Space))
         {
             isJumping = true;
         }
         if (isJumping && Input.GetKey(KeyCode.Space) && timeInAir <= maxAirTime)
         {
-            torsoRb.velocity = Vector2.up * jumpForce;
+            mainRb.velocity = Vector2.up * jumpForce;
             timeInAir += Time.deltaTime;
         }
+
         if (Input.GetKeyUp(KeyCode.Space) || timeInAir > maxAirTime)
         {
             isJumping = false;
-            torsoRb.velocity = Vector2.zero;
+            mainRb.velocity = Vector2.zero;
             timeInAir = 0;
         }
+        //Camera.main.transform.position = mainRb.position;
     }
 
     IEnumerator MoveRight(float seconds)
