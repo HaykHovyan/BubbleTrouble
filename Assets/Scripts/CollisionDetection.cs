@@ -26,6 +26,6 @@ public class CollisionDetection : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "camerachange")
-        { CameraController.Camera}
+        { /*CameraController.Camera*/}
     }
 }

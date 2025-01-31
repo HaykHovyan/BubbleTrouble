@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using TMPro;
+
 public class DialogueSystem : MonoBehaviour
 {
 
@@ -11,7 +13,7 @@ public class DialogueSystem : MonoBehaviour
     public GameObject dialoguePanel; 
     public GameObject info;
     public GameObject pressTheKeyInfo;
-    public Text dialogueText;
+    public GameObject dialogueText;
     public GameObject contButton;
     public string[] dialogue;
     private int index;
@@ -34,6 +36,7 @@ public class DialogueSystem : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 pressTheKeyInfo.SetActive(false);
+                info.SetActive(true);
                 if (dialoguePanel.activeInHierarchy)
                 {
                     ZeroText();
@@ -46,7 +49,8 @@ public class DialogueSystem : MonoBehaviour
 
 
             }
-            if (dialogueText.text == dialogue[index])
+
+            if (dialogueText.GetComponent<TextMeshProUGUI>().text == dialogue[index])
             {
                 contButton.SetActive(true);
             }
@@ -58,26 +62,13 @@ public class DialogueSystem : MonoBehaviour
         }
 
     }
-
-
-   
-    public void InfoCome()
-    {
-          info.SetActive(true);
-          pressTheKeyInfo.SetActive(true);
-    }
-    public void InfoGone()
-    {
-        info.SetActive(false);
-        pressTheKeyInfo.SetActive(false);
-    }
     public void NextLine()
     {
         contButton.SetActive(false);
         if (index < dialogue.Length - 1)
         {
             index++;
-            dialogueText.text = "";
+            dialogueText.GetComponent<TextMeshProUGUI>().text = "";
             StartCoroutine(Typing());
         }
         else
@@ -90,13 +81,13 @@ public class DialogueSystem : MonoBehaviour
     {
         foreach (char letter in dialogue[index].ToCharArray())
         {
-            dialogueText.text += letter;
+            dialogueText.GetComponent<TextMeshProUGUI>().text += letter;
             yield return new WaitForSeconds(wordSpeed);
         }
     }
     public void ZeroText()
     {
-        dialogueText.text = "";
+        dialogueText.GetComponent<TextMeshProUGUI>().text = "";
         index = 0;
         dialoguePanel.SetActive(false);
         ////info.SetActive(false);
@@ -109,9 +100,8 @@ public class DialogueSystem : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("npc"))
         {
-            uiElement.anchoredPosition = new Vector2(collision.gameObject.transform.position.x,collision.gameObject.transform.position.y + 0.5f);
+            //uiElement.anchoredPosition = new Vector2(collision.gameObject.transform.position.x,collision.gameObject.transform.position.y + 0.5f);
             playerIsClose = true;
-            info.SetActive(true);
             pressTheKeyInfo.SetActive(true);
             //AAA.SetActive(true);
             //isClose = true;
@@ -131,8 +121,8 @@ public class DialogueSystem : MonoBehaviour
             playerIsClose = false;
             //playerPressTheButton = false;
             //playerPressTheButton = !playerPressTheButton;
-            info.SetActive(false);
             pressTheKeyInfo.SetActive(false);
+            info.SetActive(false);
             ZeroText();
             //print("npc is in your area");
         }
