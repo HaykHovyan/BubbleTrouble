@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    static Camera camera;
+    [SerializeField]
+    Transform player;
 
-    void Start()
+    void Update()
     {
-        camera = Camera.main;   
-    }
-
-    public static void CameraUp()
-    {
-        camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y + 20, camera.transform.position.z); 
-    }
-    public static void CameraDown()
-    {
-        camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y - 20, camera.transform.position.z);
+        int yPosition = ((int)player.position.y + 10) / 20 * 20;
+        transform.position = new Vector3(0, yPosition, -10); 
     }
 }
