@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //animator
+    //Animator
     [SerializeField]
     Animator anim;
 
@@ -83,7 +83,6 @@ public class PlayerController : MonoBehaviour
             mainRb.velocity = Vector2.zero;
             timeInAir = 0;
         }
-        //Camera.main.transform.position = mainRb.position;
     }
 
     IEnumerator MoveRight(float seconds)
